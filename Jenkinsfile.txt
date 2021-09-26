@@ -1,21 +1,24 @@
 pipeline {
     agent { label 'firstSlave' }
     stages {
-        stage('build') {
+        stage('Git Clone') {
             steps {
-             git branch: 'main' , url: 'https://github.com/jglick/simple-maven-project-with-tests.git'
-		 dir ('simple-maven-project-with-tests') {
-		sh 'pwd'
+                 git 'https://github.com/jglick/simple-maven-project-with-tests.git'
 		}
-		 script {
-			
-           		"mvn -Dmaven.test.failure.ignore=true clean package ./mvnw package"
-			
 		}
+
+
+		stage('Build') {
+            steps {
+                 sh "./mvnw package"
+		}
+		}
+
+
+		stage('Run') {
+            steps {
+                 sh "echo 'hhhhhhh'"
+		}
+		}
+
 		
-		sh ' nohup java -jar target/*.jar &'
-			
-            }
-        }
-    }
-}
