@@ -1,0 +1,20 @@
+pipeline {
+    agent { label 'firstSlave' }
+    stages {
+        stage('build') {
+            steps {
+             git branch: 'main' , url: 'https://github.com/jglick/simple-maven-project-with-tests.git'
+		 dir ('simple-maven-project-with-tests') {
+		sh 'pwd'
+		}
+		 script {
+           		"./mvnw package"
+			
+		}
+		
+		sh 'java -jar target/*.jar&'
+			
+            }
+        }
+    }
+}
