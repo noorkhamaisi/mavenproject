@@ -8,11 +8,12 @@ pipeline {
 		sh 'pwd'
 		}
 		 script {
-           		"./mvnw package"
+			
+           		"mvn -Dmaven.test.failure.ignore=true clean package ./mvnw package"
 			
 		}
 		
-		sh ' nohup java -jar target/*.jar&'
+		sh ' nohup java -jar target/*.jar &'
 			
             }
         }
